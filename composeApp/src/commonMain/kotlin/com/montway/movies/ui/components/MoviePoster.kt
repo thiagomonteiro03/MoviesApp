@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.montway.movies.domain.model.Movie
 import com.montway.movies.domain.model.movie1
 import movies.composeapp.generated.resources.Res
@@ -36,12 +37,11 @@ fun MoviePoster(
                 .height(210.dp),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Image(
-                painter = painterResource(Res.drawable.minecraft_movie),
+            AsyncImage(
+                model = movie.posterUrl,
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop,
-
             )
         }
 

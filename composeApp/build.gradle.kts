@@ -30,8 +30,10 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
+            //Ktor
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.client.android)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -48,8 +50,20 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.kotlinx.serialization.json)
 
-//            implementation(libs.ktor.client.core)
+            //Ktor
+            implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.auth)
+            implementation(libs.ktor.client.logging)
+
+            //Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
+        }
+        jvmMain.dependencies {
+        implementation(libs.ktor.client.java)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -85,6 +99,6 @@ android {
 }
 
 dependencies {
-//    debugImplementation(compose.uiTooling)
+    debugImplementation(compose.uiTooling)
 }
 
