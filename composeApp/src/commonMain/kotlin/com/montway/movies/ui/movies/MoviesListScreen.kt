@@ -17,20 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.montway.movies.data.repository.MoviesRepository
 import com.montway.movies.domain.model.MovieSection
 import com.montway.movies.domain.model.movie1
 import com.montway.movies.ui.components.MoviesSection
+import com.montway.movies.ui.theme.MoviesAppTheme
+import movies.composeapp.generated.resources.Res
+import movies.composeapp.generated.resources.movies_list_popular_movies
+import movies.composeapp.generated.resources.movies_list_top_rated_movies
+import movies.composeapp.generated.resources.movies_list_upcoming_movies
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MoviesListRoute(
-    viewModel: MoviesListViewModel = viewModel {
-        MoviesListViewModel(
-            moviesRepository = MoviesRepository()
-        )
-    }
+    viewModel: MoviesListViewModel = koinViewModel()
 ) {
     val moviesListState by viewModel.moviesListState.collectAsStateWithLifecycle()
 
@@ -60,9 +61,9 @@ fun MoviesListScreen(
                     ) {
                         items(moviesListState.movieSection) { movieSection ->
                             val title = when (movieSection.sectionType) {
-                                MovieSection.SectionType.POPULAR -> "Popular Movies"
-                                MovieSection.SectionType.TOP_RATED -> "Top Rated Movies"
-                                MovieSection.SectionType.UPCOMING -> "Upcoming Movies"
+                                MovieSection.SectionType.POPULAR -> stringResource(Res.string.movies_list_popular_movies)
+                                MovieSection.SectionType.TOP_RATED -> stringResource(Res.string.movies_list_top_rated_movies)
+                                MovieSection.SectionType.UPCOMING -> stringResource(Res.string.movies_list_upcoming_movies)
                             }
 
                             MoviesSection(
@@ -87,14 +88,16 @@ fun MoviesListScreen(
 @Preview
 @Composable
 fun MoviesListScreenPreview() {
-    MoviesListScreen(
-        moviesListState = MoviesListViewModel.MoviesListState.Success(
-            movieSection = listOf(
-                MovieSection(
-                    sectionType = MovieSection.SectionType.POPULAR,
-                    movies = listOf(movie1)
+    MoviesAppTheme {
+        MoviesListScreen(
+            moviesListState = MoviesListViewModel.MoviesListState.Success(
+                movieSection = listOf(
+                    MovieSection(
+                        sectionType = MovieSection.SectionType.POPULAR,
+                        movies = listOf(movie1)
+                    )
                 )
             )
         )
-    )
+    }
 }

@@ -61,6 +61,16 @@ kotlin {
             //Coil
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
+
+            //Koin
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
+            implementation(libs.koin.core)
+
+            //Others
+            implementation(libs.font.awesome)
+
         }
         jvmMain.dependencies {
         implementation(libs.ktor.client.java)

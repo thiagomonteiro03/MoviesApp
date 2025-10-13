@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.montway.movies.domain.model.Movie
 import com.montway.movies.domain.model.movie1
+import com.montway.movies.ui.theme.MoviesAppTheme
 import movies.composeapp.generated.resources.Res
 import movies.composeapp.generated.resources.minecraft_movie
 import org.jetbrains.compose.resources.painterResource
@@ -57,5 +58,7 @@ fun MoviePoster(
 @Preview
 @Composable
 private fun MoviePosterPreview() {
-    MoviePoster( movie = movie1 )
+    MoviesAppTheme {
+        MoviePoster( movie = movie1 )
+    }
 }
