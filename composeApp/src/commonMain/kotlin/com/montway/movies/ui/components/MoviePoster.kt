@@ -1,6 +1,6 @@
 package com.montway.movies.ui.components
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,18 +18,19 @@ import coil3.compose.AsyncImage
 import com.montway.movies.domain.model.Movie
 import com.montway.movies.domain.model.movie1
 import com.montway.movies.ui.theme.MoviesAppTheme
-import movies.composeapp.generated.resources.Res
-import movies.composeapp.generated.resources.minecraft_movie
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MoviePoster(
     movie: Movie,
+    onMoviePosterClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
+            .clickable {
+                onMoviePosterClick()
+            }
             .width(140.dp)
     ) {
         Card(
@@ -59,6 +60,9 @@ fun MoviePoster(
 @Composable
 private fun MoviePosterPreview() {
     MoviesAppTheme {
-        MoviePoster( movie = movie1 )
+        MoviePoster(
+            onMoviePosterClick = {},
+            movie = movie1
+        )
     }
 }

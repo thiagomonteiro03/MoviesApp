@@ -31,16 +31,21 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MoviesListRoute(
-    viewModel: MoviesListViewModel = koinViewModel()
+    viewModel: MoviesListViewModel = koinViewModel(),
+    navigateToMovieDetail: (movieId: Int) -> Unit,
 ) {
     val moviesListState by viewModel.moviesListState.collectAsStateWithLifecycle()
 
-    MoviesListScreen(moviesListState = moviesListState)
+    MoviesListScreen(
+        moviesListState = moviesListState,
+        onMovieClick = navigateToMovieDetail
+    )
 }
 
 @Composable
 fun MoviesListScreen(
-    moviesListState: MoviesListViewModel.MoviesListState
+    moviesListState: MoviesListViewModel.MoviesListState,
+    onMovieClick: (movieId: Int) -> Unit,
 ) {
     Scaffold { paddingValues ->
         Box(modifier = Modifier
@@ -68,7 +73,8 @@ fun MoviesListScreen(
 
                             MoviesSection(
                                 title = title,
-                                movies = movieSection.movies
+                                movies = movieSection.movies,
+                                onMoviePosterClick = onMovieClick
                             )
                         }
                     }
@@ -87,7 +93,7 @@ fun MoviesListScreen(
 
 @Preview
 @Composable
-fun MoviesListScreenPreview() {
+private fun MoviesListScreenPreview() {
     MoviesAppTheme {
         MoviesListScreen(
             moviesListState = MoviesListViewModel.MoviesListState.Success(
@@ -97,7 +103,8 @@ fun MoviesListScreenPreview() {
                         movies = listOf(movie1)
                     )
                 )
-            )
+            ),
+            onMovieClick = {}
         )
     }
 }
