@@ -70,6 +70,7 @@ kotlin {
 
             //Others
             implementation(libs.font.awesome)
+            implementation(libs.kotlinx.datetime)
 
         }
         jvmMain.dependencies {

@@ -1,6 +1,5 @@
 package com.montway.movies.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,10 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.montway.movies.ui.theme.MoviesAppTheme
-import movies.composeapp.generated.resources.Res
-import movies.composeapp.generated.resources.minecraft_movie
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -38,8 +35,8 @@ fun CastMemberItem(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(Res.drawable.minecraft_movie),
+            AsyncImage(
+                model = profilePictureUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxHeight()

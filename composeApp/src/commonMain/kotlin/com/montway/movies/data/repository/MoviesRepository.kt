@@ -1,5 +1,6 @@
 package com.montway.movies.data.repository
 
+import com.montway.movies.data.mapper.toModel
 import com.montway.movies.domain.model.MovieSection
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -7,7 +8,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import com.montway.movies.data.network.KtorClient
-import com.montway.movies.domain.model.toModel
+import com.montway.movies.domain.model.ImageSize
+import com.montway.movies.domain.model.Movie
 
 class MoviesRepository(
     private val ktorClient: KtorClient,
@@ -38,6 +40,23 @@ class MoviesRepository(
                     movies = upcomingMovies.results.map { it.toModel() }
                 )
             )
+        }
+    }
+
+    suspend fun getMovieDetail(movieId: Int): Result<Movie> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                val movieDetailDeferred = async { ktorClient.getMovieDetail(movieId) }
+                val creditsDeferred = async { ktorClient.getCredits(movieId) }
+
+                val movieDetailResponse = movieDetailDeferred.await()
+                val creditsListResponse = creditsDeferred.await()
+
+                movieDetailResponse.toModel(
+                    imageSize = ImageSize.XLARGE,
+                    castMembersResponse = creditsListResponse.cast
+                )
+            }
         }
     }
 }
