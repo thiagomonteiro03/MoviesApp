@@ -93,7 +93,10 @@ fun MovieDetailScreen(
                 }
                 is MovieDetailViewModel.MovieDetailState.Success -> {
                     MovieDetailContent(
-                        movie = movieDetailState.movie
+                        movie = movieDetailState.movie,
+                        onWatchTrailerClick = { key ->
+                            println("Abre vídeo com key: $key")
+                        }
                     )
                 }
                 is MovieDetailViewModel.MovieDetailState.Error -> {

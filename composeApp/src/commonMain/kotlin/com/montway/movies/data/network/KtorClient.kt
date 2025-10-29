@@ -3,6 +3,7 @@ package com.montway.movies.data.network
 import com.montway.movies.data.network.model.CreditsListResponse
 import com.montway.movies.data.network.model.MovieResponse
 import com.montway.movies.data.network.model.MoviesListResponse
+import com.montway.movies.data.network.model.VideosListResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.auth.Auth
@@ -68,6 +69,12 @@ class KtorClient {
 
     suspend fun getCredits(movieId: Int): CreditsListResponse {
         return client.get("$BASE_URL/3/movie/$movieId/credits") {
+            addLanguageParam()
+        }.body()
+    }
+
+    suspend fun getVideos(movieId: Int): VideosListResponse {
+        return client.get("$BASE_URL/3/movie/$movieId/videos"){
             addLanguageParam()
         }.body()
     }

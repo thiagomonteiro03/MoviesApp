@@ -48,13 +48,20 @@ class MoviesRepository(
             runCatching {
                 val movieDetailDeferred = async { ktorClient.getMovieDetail(movieId) }
                 val creditsDeferred = async { ktorClient.getCredits(movieId) }
+                val videosDeferred = async { ktorClient.getVideos(movieId) }
 
                 val movieDetailResponse = movieDetailDeferred.await()
                 val creditsListResponse = creditsDeferred.await()
+                val videosListResponse = videosDeferred.await()
+
+                val movieTrailerYoutubeKey = videosListResponse.results.firstOrNull { videoResponse ->
+                    videoResponse.site == "YouTube"
+                }?.key
 
                 movieDetailResponse.toModel(
                     imageSize = ImageSize.XLARGE,
-                    castMembersResponse = creditsListResponse.cast
+                    castMembersResponse = creditsListResponse.cast,
+                    movieTrailerYoutubeKey = movieTrailerYoutubeKey
                 )
             }
         }

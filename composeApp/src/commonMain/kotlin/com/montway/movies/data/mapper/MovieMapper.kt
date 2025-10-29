@@ -9,7 +9,9 @@ import com.montway.movies.utils.formatRating
 
 fun MovieResponse.toModel(
     imageSize: ImageSize = ImageSize.SMALL,
-    castMembersResponse: List<CastMemberResponse>? = null) = Movie(
+    castMembersResponse: List<CastMemberResponse>? = null,
+    movieTrailerYoutubeKey: String? = null,
+) = Movie(
     id = this.id,
     title = this.title,
     overview = this.overview,
@@ -22,6 +24,7 @@ fun MovieResponse.toModel(
         ?.filter { it.department == "Acting" }
         ?.take(20)
         ?.map { it.toModel() },
+    movieTrailerYoutubeKey = movieTrailerYoutubeKey
 )
 
 private fun MovieResponse.getYearFromReleaseDate(): Int {

@@ -52,10 +52,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun MovieDetailContent(
     movie: Movie,
+    onWatchTrailerClick: (key: String) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
@@ -135,12 +136,11 @@ fun MovieDetailContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+
+            movie.movieTrailerYoutubeKey?.let { key ->
                 ElevatedButton(
                     onClick = {
-
+                        onWatchTrailerClick(key)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -209,7 +209,7 @@ fun MovieDetailContent(
 private fun MovieDetailContentPreview() {
     MoviesAppTheme {
         Scaffold {
-            MovieDetailContent(movie1)
+            MovieDetailContent(movie1, onWatchTrailerClick = {  } )
         }
     }
 }
